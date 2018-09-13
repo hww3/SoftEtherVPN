@@ -1129,7 +1129,7 @@ bool DlipReceiveAck(int fd)
 // Validate device name and return proper device path according to system type
 bool ParseUnixEthDeviceName(char *dst_devname, UINT dst_devname_size, char *src_name)
 {
-	UINT len, i;
+	UINT len;
 	struct stat s;
 	int err;
 	char *device_path;
@@ -1159,11 +1159,12 @@ bool ParseUnixEthDeviceName(char *dst_devname, UINT dst_devname_size, char *src_
 	}
 
 	device_pathlen = StrLen(device_path);
+	len = strlen(src_name);
 
 	// Last character must be a number
-	if (src_name[i] < '0' || '9' < src_name[i])
+	if (src_name[len - 1] < '0' || '9' < src_name[len - 1])
 	{
-		if (src_name[i + 1] == 0)
+		if(src_name[len]==0)
 		{
 			return false;
 		}
